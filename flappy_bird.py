@@ -29,11 +29,14 @@ clock = pygame.time.Clock()
 # Load bird image
 bird_image = pygame.image.load('bird.png')
 
+# Resize bird image
+bird_image = pygame.transform.scale(bird_image, (34, 24))  # Adjust dimensions as needed
+
 # Bird class
 class Bird:
     def __init__(self):
         self.x = 100
-        self.y = HEIGHT // 2
+        self.y = HEIGHT // 4  # Start the bird higher up
         self.velocity = 0
         self.image = bird_image
         self.width = self.image.get_width()
@@ -133,13 +136,17 @@ class Game:
                     
                 # Check for collisions
                 if pipe.collide(self.bird):
+                    print('Bird collided with a pipe')
                     self.game_over = True
                     
             # Remove pipes that are off screen
             self.pipes = [pipe for pipe in self.pipes if pipe.x > -50]
             
+            print(f'Bird position: {self.bird.y}, Velocity: {self.bird.velocity}')
+            
             # Check if bird hits the ground
             if self.bird.y + self.bird.height >= HEIGHT:
+                print('Bird hit the ground')
                 self.game_over = True
                 
     def draw(self):
