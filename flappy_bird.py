@@ -26,14 +26,18 @@ screen = pygame.display.set_mode((WIDTH, HEIGHT))
 pygame.display.set_caption('Flappy Bird')
 clock = pygame.time.Clock()
 
+# Load bird image
+bird_image = pygame.image.load('bird.png')
+
 # Bird class
 class Bird:
     def __init__(self):
         self.x = 100
         self.y = HEIGHT // 2
         self.velocity = 0
-        self.width = 30
-        self.height = 30
+        self.image = bird_image
+        self.width = self.image.get_width()
+        self.height = self.image.get_height()
         
     def update(self):
         # Apply gravity
@@ -49,7 +53,7 @@ class Bird:
         self.velocity = BIRD_JUMP
         
     def draw(self):
-        pygame.draw.rect(screen, BLUE, (self.x, self.y, self.width, self.height), border_radius=10)
+        screen.blit(self.image, (self.x, self.y))
         
     def get_mask(self):
         return pygame.Rect(self.x, self.y, self.width, self.height)
